@@ -1,12 +1,5 @@
 package com.hljy.user.controller;
 
-import com.hljy.common.result.Result;
-import com.hljy.user.dto.UserLoginDTO;
-import com.hljy.user.dto.UserRegisterDTO;
-import com.hljy.user.entity.User;
-import com.hljy.user.service.UserService;
-import com.hljy.user.vo.UserVO;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
