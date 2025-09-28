@@ -19,11 +19,7 @@ public class UserVO {
      * 用户名
      */
     private String username;
-    
-    /**
-     * 昵称
-     */
-    private String nickname;
+
     
     /**
      * 性别：0-未知，1-男，2-女

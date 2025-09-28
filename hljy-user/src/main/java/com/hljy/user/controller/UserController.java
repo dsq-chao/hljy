@@ -1,10 +1,17 @@
 package com.hljy.user.controller;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.hljy.common.result.Result;
+import com.hljy.user.dto.UserLoginDTO;
+import com.hljy.user.entity.User;
+import com.hljy.user.service.UserService;
+import com.hljy.user.vo.UserLoginVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -15,7 +22,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
 @Validated
-@Tag(name = "用户管理", description = "用户相关接口")
 public class UserController {
+
+    private  final UserService userService;
+
+    @PostMapping("/login")
+    public Result<UserLoginVo> login(@RequestBody UserLoginDTO loginDTO){
+            log.info("用户{}登录", loginDTO.getUsername());
+        UserLoginVo userLoginVo = userService.login(loginDTO);
+        return Result.success(userLoginVo);
+    }
 
 }

@@ -21,14 +21,5 @@ public class UserLoginDTO {
      */
     @NotBlank(message = "密码不能为空")
     private String password;
-    
-    /**
-     * 验证码
-     */
-    private String captcha;
-    
-    /**
-     * 验证码key
-     */
-    private String captchaKey;
+
 }

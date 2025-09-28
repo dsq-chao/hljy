@@ -1,40 +1,21 @@
 server:
-  port: 8001
+  port: 8081
 
 spring:
   application:
     name: hljy-user
   profiles:
-    active: dev
-  cloud:
-    nacos:
-      discovery:
-        server-addr: localhost:8848
-        namespace: dev
-        group: DEFAULT_GROUP
-      config:
-        server-addr: localhost:8848
-        namespace: dev
-        group: DEFAULT_GROUP
-        file-extension: yml
+    active: local
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/hljy_user?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+    url: jdbc:mysql://${hl.db.host}:3306/db_user?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
     username: root
-    password: 123456
-  redis:
-    host: localhost
-    port: 6379
-    password: 
-    database: 0
-    timeout: 10000ms
-    jedis:
-      pool:
-        max-active: 8
-        max-wait: -1ms
-        max-idle: 8
-        min-idle: 0
-
+    password: ${hl.db.pw}
+  cloud:
+    nacos:
+      server-addr: 192.168.100.120:8848
+      config:
+        enabled: false  # 暂时禁用Nacos配置，避免连接问题
 # MyBatis Plus配置
 mybatis-plus:
   configuration:
@@ -51,27 +32,15 @@ mybatis-plus:
   mapper-locations: classpath*:mapper/**/*.xml
 
 # JWT配置
-jwt:
-  secret: hljy-lovelink-secret-key-2024
-  expiration: 86400
+hljy:
+  jwt:
+    # 设置jwt签名加密时使用的秘钥
+    admin-secret-key: itchaoLoveLink_2025_SecureKey_ABCDEF123456
+    # 设置jwt过期时间
+    admin-ttl: 7200000
+    # 设置前端传递过来的令牌名称
+    token-name: token
 
-# MinIO配置
-minio:
-  endpoint: http://localhost:9000
-  access-key: minioadmin
-  secret-key: minioadmin
-  bucket-name: hljy
-
-# Knife4j配置
-knife4j:
-  enable: true
-  openapi:
-    title: LoveLink用户服务API文档
-    description: LoveLink单身交友微服务平台 - 用户服务
-    version: 1.0.0
-    concat: admin@hljy.com
-  setting:
-    language: zh_cn
 
 # 日志配置
 logging:

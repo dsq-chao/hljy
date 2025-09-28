@@ -1,67 +1,40 @@
 package com.hljy.common.result;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+
+import java.io.Serializable;
 
 /**
- * 统一返回结果
+ * 后端统一返回结果
+ * @param <T>
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Result<T> {
-    
-    private Integer code;
-    private String message;
-    private T data;
-    
-    /**
-     * 成功返回结果
-     */
+public class Result<T> implements Serializable {
+
+    private Integer code; //编码：1成功，0和其它数字为失败
+    private String msg; //错误信息
+    private T data; //数据
+
     public static <T> Result<T> success() {
-        return new Result<>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), null);
+        Result<T> result = new Result<T>();
+        result.code = 200;
+        result.msg = "操作成功";
+        return result;
     }
-    
-    /**
-     * 成功返回结果
-     */
-    public static <T> Result<T> success(T data) {
-        return new Result<>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), data);
+
+    public static <T> Result<T> success(T object) {
+        Result<T> result = new Result<T>();
+        result.data = object;
+        result.code = 200;
+        result.msg = "操作成功";
+        return result;
     }
-    
-    /**
-     * 成功返回结果
-     */
-    public static <T> Result<T> success(String message, T data) {
-        return new Result<>(ResultCode.SUCCESS.getCode(), message, data);
+
+    public static <T> Result<T> error(String msg) {
+        Result result = new Result();
+        result.msg = msg;
+        result.code = 0;
+        return result;
     }
-    
-    /**
-     * 失败返回结果
-     */
-    public static <T> Result<T> failed() {
-        return new Result<>(ResultCode.FAILED.getCode(), ResultCode.FAILED.getMessage(), null);
-    }
-    
-    /**
-     * 失败返回结果
-     */
-    public static <T> Result<T> failed(String message) {
-        return new Result<>(ResultCode.FAILED.getCode(), message, null);
-    }
-    
-    /**
-     * 失败返回结果
-     */
-    public static <T> Result<T> failed(ResultCode resultCode) {
-        return new Result<>(resultCode.getCode(), resultCode.getMessage(), null);
-    }
-    
-    /**
-     * 失败返回结果
-     */
-    public static <T> Result<T> failed(ResultCode resultCode, String message) {
-        return new Result<>(resultCode.getCode(), message, null);
-    }
+
 }

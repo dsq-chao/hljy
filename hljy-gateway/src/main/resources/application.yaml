@@ -1,0 +1,103 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: hljy-gateway
+
+  cloud:
+    nacos:
+      config:
+        import-check:
+          enabled: false
+      discovery:
+        server-addr: 192.168.100.120:8848  # 只保留注册中心
+
+    gateway:
+      discovery:
+        locator:
+          enabled: true # 开启服务发现自动路由
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+            maxAge: 3600
+      routes:
+        # 用户服务
+        - id: hljy-user
+          uri: lb://hljy-user
+          predicates:
+            - Path=/api/user/**
+
+        # 推荐匹配服务
+        - id: hljy-match
+          uri: lb://hljy-match
+          predicates:
+            - Path=/api/match/**
+          filters:
+            - StripPrefix=2
+
+        # 聊天服务
+        - id: hljy-chat
+          uri: lb://hljy-chat
+          predicates:
+            - Path=/api/chat/**
+          filters:
+            - StripPrefix=2
+
+        # 动态服务
+        - id: hljy-moment
+          uri: lb://hljy-moment
+          predicates:
+            - Path=/api/moment/**
+          filters:
+            - StripPrefix=2
+
+        # 通知服务
+        - id: hljy-notification
+          uri: lb://hljy-notification
+          predicates:
+            - Path=/api/notification/**
+          filters:
+            - StripPrefix=2
+
+        # 支付服务
+        - id: hljy-payment
+          uri: lb://hljy-payment
+          predicates:
+            - Path=/api/payment/**
+          filters:
+            - StripPrefix=2
+
+        # 文件上传服务 (暂时路由到用户服务)
+        - id: hljy-upload
+          uri: lb://hljy-user
+          predicates:
+            - Path=/api/upload/**
+          filters:
+            - StripPrefix=2
+
+        # WebSocket支持 (暂时路由到聊天服务)
+        - id: hljy-websocket
+          uri: lb://hljy-chat
+          predicates:
+            - Path=/ws/**
+          filters:
+            - StripPrefix=1
+
+        # 健康检查
+        - id: hljy-health
+          uri: lb://hljy-user
+          predicates:
+            - Path=/health/**
+          filters:
+            - StripPrefix=1
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.netty: DEBUG
