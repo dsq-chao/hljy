@@ -46,7 +46,6 @@
         <minio.version>8.5.2</minio.version>
         <hutool.version>5.8.22</hutool.version>
         <lombok.version>1.18.30</lombok.version>
-        <knife4j.version>4.3.0</knife4j.version>
         <jackson.version>2.15.2</jackson.version>
     </properties>
 
@@ -143,7 +142,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <skip>true</skip>
+                    <skip>false</skip>
                 </configuration>
             </plugin>
         </plugins>

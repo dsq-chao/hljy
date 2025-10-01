@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hljy.match.mapper.MatchMapper">
+
+    <!-- 查询用户已匹配的用户ID列表 -->
+    <select id="selectMatchedUserIds" resultType="java.lang.Long">
+        SELECT CASE 
+            WHEN user_a = #{userId} THEN user_b 
+            ELSE user_a 
+        END as matched_user_id
+        FROM match_record 
+        WHERE (user_a = #{userId} OR user_b = #{userId}) 
+        AND status = 1
+    </select>
+
+    <!-- 查询用户已拒绝的用户ID列表 -->
+    <select id="selectRejectedUserIds" resultType="java.lang.Long">
+        SELECT target_id 
+        FROM user_like 
+        WHERE user_id = #{userId} 
+        AND type = 'dislike'
+    </select>
+
+    <!-- 查询用户已喜欢的用户ID列表 -->
+    <select id="selectLikedUserIds" resultType="java.lang.Long">
+        SELECT target_id 
+        FROM user_like 
+        WHERE user_id = #{userId} 
+        AND type = 'like'
+    </select>
+
+    <!-- 检查两个用户是否互相喜欢 -->
+    <select id="checkMutualLike" resultType="int">
+        SELECT COUNT(*) 
+        FROM user_like 
+        WHERE ((user_id = #{userId1} AND target_id = #{userId2}) 
+               OR (user_id = #{userId2} AND target_id = #{userId1}))
+        AND type = 'like'
+        HAVING COUNT(*) = 2
+    </select>
+
+    <!-- 查询匹配成功的用户ID列表 -->
+    <select id="selectMutualMatchUserIds" resultType="java.lang.Long">
+        SELECT CASE 
+            WHEN user_a = #{userId} THEN user_b 
+            ELSE user_a 
+        END as matched_user_id
+        FROM match_record 
+        WHERE (user_a = #{userId} OR user_b = #{userId}) 
+        AND status = 1
+    </select>
+
+</mapper>

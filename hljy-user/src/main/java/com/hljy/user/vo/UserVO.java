@@ -19,10 +19,14 @@ public class UserVO {
      * 用户名
      */
     private String username;
-
     
     /**
-     * 性别：0-未知，1-男，2-女
+     * 昵称
+     */
+    private String nickname;
+    
+    /**
+     * 性别：1-男，2-女
      */
     private Integer gender;
     
@@ -30,6 +34,16 @@ public class UserVO {
      * 年龄
      */
     private Integer age;
+    
+    /**
+     * 手机号
+     */
+    private String phone;
+    
+    /**
+     * 邮箱
+     */
+    private String email;
     
     /**
      * 头像URL
@@ -42,7 +56,7 @@ public class UserVO {
     private String bio;
     
     /**
-     * 兴趣标签
+     * 兴趣标签，JSON字符串
      */
     private String interests;
     
@@ -70,4 +84,9 @@ public class UserVO {
      * 创建时间
      */
     private LocalDateTime createTime;
+    
+    /**
+     * 更新时间
+     */
+    private LocalDateTime updateTime;
 }

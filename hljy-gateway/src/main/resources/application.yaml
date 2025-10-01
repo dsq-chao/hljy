@@ -20,8 +20,8 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOriginPatterns: "*"
-            allowedMethods: "*"
+            allowedOrigins: "http://localhost:3000"
+            allowedMethods: "GET,POST,PUT,DELETE,OPTIONS"
             allowedHeaders: "*"
             allowCredentials: true
             maxAge: 3600
@@ -37,8 +37,6 @@ spring:
           uri: lb://hljy-match
           predicates:
             - Path=/api/match/**
-          filters:
-            - StripPrefix=2
 
         # 聊天服务
         - id: hljy-chat
@@ -53,8 +51,6 @@ spring:
           uri: lb://hljy-moment
           predicates:
             - Path=/api/moment/**
-          filters:
-            - StripPrefix=2
 
         # 通知服务
         - id: hljy-notification

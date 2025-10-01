@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hljy.moment.mapper.MomentTopicMapper">
+
+    <!-- 查询热门话题 -->
+    <select id="selectHotTopics" resultType="com.hljy.moment.entity.MomentTopic">
+        SELECT 
+            id,
+            name,
+            description,
+            usage_count,
+            create_time,
+            update_time,
+            deleted
+        FROM moment_topic
+        WHERE deleted = 0
+        ORDER BY usage_count DESC
+        LIMIT #{limit}
+    </select>
+
+</mapper>

@@ -56,6 +56,16 @@ public class MatchVO {
     private Double score;
     
     /**
+     * 是否VIP：0-否，1-是
+     */
+    private Integer isVip;
+    
+    /**
+     * 兴趣标签，JSON字符串
+     */
+    private String interests;
+    
+    /**
      * 匹配时间
      */
     private LocalDateTime matchTime;

@@ -1,76 +1,131 @@
 package com.hljy.user.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
  * 用户实体类
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 @TableName("user")
-public class User implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+public class User {
+    
     /**
-     * 主键 ID
+     * 用户ID
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
-
+    
     /**
      * 用户名
      */
+    @TableField("username")
     private String username;
-
+    
     /**
      * 密码
      */
+    @TableField("password")
     private String password;
-
+    
     /**
-     * 邮箱
+     * 昵称
      */
-    private String email;
-
+    @TableField("nickname")
+    private String nickname;
+    
+    /**
+     * 性别：1-男，2-女
+     */
+    @TableField("gender")
+    private Integer gender;
+    
+    /**
+     * 年龄
+     */
+    @TableField("age")
+    private Integer age;
+    
     /**
      * 手机号
      */
+    @TableField("phone")
     private String phone;
-
+    
     /**
-     * 性别 (0-未知, 1-男, 2-女)
+     * 邮箱
      */
-    private Integer gender;
-
+    @TableField("email")
+    private String email;
+    
     /**
-     * 生日
+     * 头像URL
      */
-    private LocalDate birthday;
-
+    @TableField("avatar")
+    private String avatar;
+    
     /**
-     * 头像地址
+     * 个人简介
      */
-    private String avatarUrl;
-
-    /**
-     * 个性签名
-     */
+    @TableField("bio")
     private String bio;
-
+    
+    /**
+     * 兴趣标签，JSON字符串
+     */
+    @TableField("interests")
+    private String interests;
+    
+    /**
+     * 所在城市
+     */
+    @TableField("city")
+    private String city;
+    
+    /**
+     * 是否VIP：0-否，1-是
+     */
+    @TableField("is_vip")
+    private Integer isVip;
+    
+    /**
+     * VIP过期时间
+     */
+    @TableField("vip_expire_time")
+    private LocalDateTime vipExpireTime;
+    
+    /**
+     * 状态：0-禁用，1-正常
+     */
+    @TableField("status")
+    private Integer status;
+    
+    /**
+     * 最后登录时间
+     */
+    @TableField("last_login_time")
+    private LocalDateTime lastLoginTime;
+    
     /**
      * 创建时间
      */
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
-
+    
     /**
-     * 修改时间
+     * 更新时间
      */
+    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
+    
+    /**
+     * 是否删除：0-否，1-是
+     */
+    @TableLogic
+    @TableField("deleted")
+    private Integer deleted;
 }
